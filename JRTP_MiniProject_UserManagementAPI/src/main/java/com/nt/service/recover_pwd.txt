@@ -1,0 +1,10 @@
+
+hi {FULL-NAME}
+<br>
+<br>
+Your password is <br>
+please find your temporary password below<br>
+ <b> Password::{TEMP-PWD}<b>
+ <br>
+ <br>
+ Thanks, <i> Admin Team</i>

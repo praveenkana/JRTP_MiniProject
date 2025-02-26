@@ -1,0 +1,14 @@
+
+hi {FULL-NAME}
+<br>
+<br>
+Your user account registration process is completed <br>
+please find your temporary password below<br>
+ <b> Temporary Password::{TEMP-PWD}<b>
+ 
+ <br> <a href="{URL}"> Click here to activate your account</a>
+ <br>
+ <br>
+ <br>
+ Thanks, <i> Admin Team</i>
+  

@@ -50,7 +50,7 @@ public class UserMgmtServiceImpl implements IUserMgmtService {
 
 		emailUtils.sendEmailMessage(user.getEmail(), subject, body);
 
-		return savedEntity != null ? "user registered with id value::" + savedEntity.getUserId()
+		return savedEntity.getUserId()!= null ? "user registered with id value::" + savedEntity.getUserId()
 				: "problem in user registration";
 	}
 
@@ -235,9 +235,9 @@ public class UserMgmtServiceImpl implements IUserMgmtService {
 			} while (line != null);
 
 			mailBody = buffer.toString();
-			mailBody.replace("{FULL-NAME}", fullName);
-			mailBody.replace("{TEMP-PWD}", password);
-			mailBody.replace("{URL}",url);
+			mailBody=mailBody.replace("{FULL-NAME}", fullName);
+			mailBody=mailBody.replace("{TEMP-PWD}", password);
+			mailBody=mailBody.replace("{URL}",url);
 		} catch (Exception e) {
 
 			e.printStackTrace();

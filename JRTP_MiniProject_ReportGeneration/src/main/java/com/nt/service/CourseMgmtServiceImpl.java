@@ -171,53 +171,59 @@ public class CourseMgmtServiceImpl implements ICourseMgmtService {
 
 	@Override
 	public void generateExcelReport(SearchInputs inputs, HttpServletResponse res) throws IOException {
-		// get search results
-		List<SearchResults> resultList = showCourseByFilters(inputs);
-		// create excel workbook
-		HSSFWorkbook workbook = new HSSFWorkbook();
-		// create sheet in workbook
-		HSSFSheet sheet1 = workbook.createSheet("CourseDetails");
-		// create header row in sheet1
-		HSSFRow headerRow = sheet1.createRow(0);
-		headerRow.createCell(0).setCellValue("coursedId");
-		headerRow.createCell(1).setCellValue("courseName");
-		headerRow.createCell(2).setCellValue("location");
-		headerRow.createCell(3).setCellValue("courseCategory");
-		headerRow.createCell(4).setCellValue("facultyName");
-		headerRow.createCell(5).setCellValue("fee");
-		headerRow.createCell(6).setCellValue("adminContact");
-		headerRow.createCell(7).setCellValue("trainingMode");
-		headerRow.createCell(8).setCellValue("startDate");
-		headerRow.createCell(9).setCellValue("courseStatus");
+		try(ServletOutputStream os = res.getOutputStream();
+				HSSFWorkbook workbook = new HSSFWorkbook();){
+			// get search results
+			List<SearchResults> resultList = showCourseByFilters(inputs);
+			// create excel workbook
+			
+			// create sheet in workbook
+			HSSFSheet sheet1 = workbook.createSheet("CourseDetails");
+			// create header row in sheet1
+			HSSFRow headerRow = sheet1.createRow(0);
+			headerRow.createCell(0).setCellValue("coursedId");
+			headerRow.createCell(1).setCellValue("courseName");
+			headerRow.createCell(2).setCellValue("location");
+			headerRow.createCell(3).setCellValue("courseCategory");
+			headerRow.createCell(4).setCellValue("facultyName");
+			headerRow.createCell(5).setCellValue("fee");
+			headerRow.createCell(6).setCellValue("adminContact");
+			headerRow.createCell(7).setCellValue("trainingMode");
+			headerRow.createCell(8).setCellValue("startDate");
+			headerRow.createCell(9).setCellValue("courseStatus");
 
-		int i = 1;
+			int i = 1;
 
-		for (SearchResults result : resultList) {
+			for (SearchResults result : resultList) {
 
-			HSSFRow datarow = sheet1.createRow(i);
-			datarow.createCell(0).setCellValue(result.getCourseId());
-			datarow.createCell(1).setCellValue(result.getCourseName());
-			datarow.createCell(2).setCellValue(result.getLocation());
-			datarow.createCell(3).setCellValue(result.getCourseCategory());
-			datarow.createCell(4).setCellValue(result.getFacultyName());
-			datarow.createCell(5).setCellValue(result.getFee());
-			datarow.createCell(6).setCellValue(result.getAdminContact());
-			datarow.createCell(7).setCellValue(result.getTrainingMode());
-			datarow.createCell(8).setCellValue(result.getStartDate());
-			datarow.createCell(9).setCellValue(result.getCourseStatus());
-			i++;
+				HSSFRow datarow = sheet1.createRow(i);
+				datarow.createCell(0).setCellValue(result.getCourseId());
+				datarow.createCell(1).setCellValue(result.getCourseName());
+				datarow.createCell(2).setCellValue(result.getLocation());
+				datarow.createCell(3).setCellValue(result.getCourseCategory());
+				datarow.createCell(4).setCellValue(result.getFacultyName());
+				datarow.createCell(5).setCellValue(result.getFee());
+				datarow.createCell(6).setCellValue(result.getAdminContact());
+				datarow.createCell(7).setCellValue(result.getTrainingMode());
+				datarow.createCell(8).setCellValue(result.getStartDate());
+				datarow.createCell(9).setCellValue(result.getCourseStatus());
+				i++;
+
+			}
+
+		
+			
+			// write excel data to output stream
+			workbook.write(os);
+		
 
 		}
 
-		// get output stream object pointing to response obj
-		ServletOutputStream os = res.getOutputStream();
-		// write excel data to output stream
-		workbook.write(os);
-		os.close();
-		workbook.close();
 
-	}
-
+			
+		}
+		
+		
 	@Override
 	public void generatePdfReport(HttpServletResponse response) throws DocumentException, IOException {
 		List<CourseDetails> list = courserepo.findAll();
